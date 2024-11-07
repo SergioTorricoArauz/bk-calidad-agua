@@ -1,3 +1,5 @@
+# departamentos/infrastructure/models/departamento_model.py
+
 from django.db import models
 
 

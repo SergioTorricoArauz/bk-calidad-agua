@@ -1,4 +1,4 @@
-# mi_app/infrastructure/repositories/departamento_repository_impl.py
+# departamentos/infrastructure/repositories/departamento_repository_impl.py
 
 from typing import List, Optional
 from departamentos.domain.entities import Departamento
@@ -7,6 +7,14 @@ from departamentos.infrastructure.models import DepartamentoModel
 
 
 class DepartamentoRepositoryImpl(DepartamentoRepository):
+
+    def actualizar(self, departamento: Departamento) -> Departamento:
+        """Actualiza un departamento existente en la base de datos."""
+        departamento_model = DepartamentoModel.objects.get(id=departamento.id)
+        departamento_model.nombre = departamento.nombre
+        departamento_model.save()
+        return Departamento(nombre=departamento_model.nombre, id=departamento_model.id)
+
     def guardar(self, departamento: Departamento) -> Departamento:
         departamento_model = DepartamentoModel.objects.create(nombre=departamento.nombre)
         return Departamento(nombre=departamento_model.nombre, id=departamento_model.id)

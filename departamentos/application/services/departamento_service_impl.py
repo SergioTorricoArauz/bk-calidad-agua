@@ -1,7 +1,6 @@
-# mi_app/application/services/departamento_service_impl.py
+# departamentos/application/services/departamento_service_impl.py
 
 from typing import List, Optional
-
 from departamentos.domain.entities import Departamento
 from departamentos.domain.exception import DepartamentoError
 from departamentos.domain.port.input import DepartamentoService
@@ -29,9 +28,24 @@ class DepartamentoServiceImpl(DepartamentoService):
             raise DepartamentoError(f"Departamento con id {id} no encontrado.")
         return departamento
 
+    def actualizar_departamento(self, id: int, nombre: str) -> Departamento:
+        """Actualiza el nombre de un departamento existente."""
+        departamento = self.obtener_departamento_por_id(id)
+        if not nombre:
+            raise DepartamentoError("El nombre del departamento no puede estar vacío.")
+        departamento.nombre = nombre
+        return self.departamento_repository.actualizar(departamento)
+
     def eliminar_departamento(self, nombre: str) -> None:
         """Elimina un departamento por su nombre"""
         departamento = self.departamento_repository.obtener_por_nombre(nombre)
         if departamento is None:
             raise DepartamentoError(f"Departamento con nombre '{nombre}' no encontrado.")
         self.departamento_repository.eliminar(nombre)
+
+    def eliminar_departamento_por_id(self, id: int) -> None:
+        """Elimina un departamento por su ID"""
+        departamento = self.obtener_departamento_por_id(id)
+        if departamento is None:
+            raise DepartamentoError(f"Departamento con id '{id}' no encontrado.")
+        self.departamento_repository.eliminar_por_id(id)

@@ -1,3 +1,5 @@
+# departamentos/infrastructure/repositories/departamento_repository_impl.py
+
 from rest_framework import serializers
 
 from departamentos.infrastructure.models import DepartamentoModel

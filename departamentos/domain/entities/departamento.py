@@ -1,3 +1,5 @@
+# departametos/domain/entities/departamento.py
+
 from departamentos.domain.exception import DepartamentoError
 
 from typing import Optional

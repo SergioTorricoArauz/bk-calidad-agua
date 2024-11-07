@@ -1,4 +1,4 @@
-# mi_app/domain/ports/input/departamento_service.py
+# departamentos/domain/ports/input/departamento_service.py
 
 from abc import ABC, abstractmethod
 from typing import List, Optional
@@ -27,4 +27,9 @@ class DepartamentoService(ABC):
     @abstractmethod
     def eliminar_departamento(self, nombre: str) -> None:
         """Elimina un departamento por su nombre."""
+        pass
+
+    @abstractmethod
+    def actualizar_departamento(self, id: int, nombre: str) -> Departamento:
+        """Actualiza un departamento por su ID."""
         pass

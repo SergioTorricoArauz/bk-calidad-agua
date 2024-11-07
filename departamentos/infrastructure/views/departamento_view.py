@@ -1,3 +1,5 @@
+# departamentos/infrastructure/views/departamento_view.py
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -26,6 +28,17 @@ class DepartamentoViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
         departamento = departamento_service.crear_departamento(serializer.validated_data['nombre'])
         return Response(DepartamentoSerializer(departamento).data, status=status.HTTP_201_CREATED)
+
+    @staticmethod
+    def update(request, pk=None):
+        """Actualiza un departamento existente."""
+        serializer = DepartamentoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            departamento = departamento_service.actualizar_departamento(int(pk), serializer.validated_data['nombre'])
+            return Response(DepartamentoSerializer(departamento).data, status=status.HTTP_200_OK)
+        except DepartamentoError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
     @staticmethod
     def retrieve(request, pk=None):

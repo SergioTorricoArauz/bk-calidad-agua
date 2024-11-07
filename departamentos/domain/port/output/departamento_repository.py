@@ -1,4 +1,4 @@
-# mi_app/domain/ports/output/departamento_repository.py
+# departamentos/domain/ports/output/departamento_repository.py
 
 from abc import ABC, abstractmethod
 from typing import Optional, List
@@ -36,4 +36,9 @@ class DepartamentoRepository(ABC):
     @abstractmethod
     def obtener_todos(self) -> List[Departamento]:
         """Devuelve una lista de todos los departamentos."""
+        pass
+
+    @abstractmethod
+    def actualizar(self, departamento: Departamento) -> Departamento:
+        """Actualiza un departamento existente."""
         pass
