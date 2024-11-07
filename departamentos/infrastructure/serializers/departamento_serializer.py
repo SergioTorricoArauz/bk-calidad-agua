@@ -1,4 +1,4 @@
-# departamentos/infrastructure/repositories/departamento_repository_impl.py
+# departamentos/infrastructure/serializers/departamento_serializer.py
 
 from rest_framework import serializers
 
