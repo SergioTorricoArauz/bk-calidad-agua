@@ -8,7 +8,6 @@ from departamentos.domain.port.output.departamento_repository import Departament
 
 
 class DepartamentoServiceImpl(DepartamentoService):
-    """Implementación de los casos de uso relacionados con Departamento."""
 
     def __init__(self, departamento_repository: DepartamentoRepository):
         self.departamento_repository = departamento_repository
@@ -29,7 +28,6 @@ class DepartamentoServiceImpl(DepartamentoService):
         return departamento
 
     def actualizar_departamento(self, id: int, nombre: str) -> Departamento:
-        """Actualiza el nombre de un departamento existente."""
         departamento = self.obtener_departamento_por_id(id)
         if not nombre:
             raise DepartamentoError("El nombre del departamento no puede estar vacío.")
@@ -37,14 +35,12 @@ class DepartamentoServiceImpl(DepartamentoService):
         return self.departamento_repository.actualizar(departamento)
 
     def eliminar_departamento(self, nombre: str) -> None:
-        """Elimina un departamento por su nombre"""
         departamento = self.departamento_repository.obtener_por_nombre(nombre)
         if departamento is None:
             raise DepartamentoError(f"Departamento con nombre '{nombre}' no encontrado.")
         self.departamento_repository.eliminar(nombre)
 
     def eliminar_departamento_por_id(self, id: int) -> None:
-        """Elimina un departamento por su ID"""
         departamento = self.obtener_departamento_por_id(id)
         if departamento is None:
             raise DepartamentoError(f"Departamento con id '{id}' no encontrado.")

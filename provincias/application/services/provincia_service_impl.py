@@ -26,7 +26,6 @@ class ProvinciaServiceImpl(ProvinciaService):
         self.provincia_repository.eliminar(id)
 
     def actualizar_provincia(self, id: int, nombre: str, departamento_id: int) -> Provincia:
-        """Actualiza una provincia existente con nuevos valores."""
         provincia = self.obtener_provincia_por_id(id)
         provincia.nombre = nombre
         provincia.departamento_id = departamento_id

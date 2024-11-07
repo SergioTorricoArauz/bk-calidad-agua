@@ -39,7 +39,6 @@ class ProvinciaRepositoryImpl(ProvinciaRepository):
         return [Provincia(nombre=prov.nombre, departamento_id=prov.departamento.id, id=prov.id) for prov in provincias_model]
 
     def actualizar(self, provincia: Provincia) -> Provincia:
-        """Actualiza una provincia existente en la base de datos."""
         provincia_model = ProvinciaModel.objects.get(id=provincia.id)
         provincia_model.nombre = provincia.nombre
         provincia_model.departamento_id = provincia.departamento_id

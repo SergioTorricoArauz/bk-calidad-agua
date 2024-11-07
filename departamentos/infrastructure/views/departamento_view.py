@@ -14,7 +14,6 @@ departamento_service = DepartamentoServiceImpl(departamento_repository)
 
 
 class DepartamentoViewSet(viewsets.ViewSet):
-    """ViewSet para manejar las operaciones CRUD de Departamento usando el servicio de aplicación."""
 
     @staticmethod
     def list(request):
@@ -31,7 +30,6 @@ class DepartamentoViewSet(viewsets.ViewSet):
 
     @staticmethod
     def update(request, pk=None):
-        """Actualiza un departamento existente."""
         serializer = DepartamentoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:

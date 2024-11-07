@@ -9,7 +9,6 @@ from departamentos.infrastructure.models import DepartamentoModel
 class DepartamentoRepositoryImpl(DepartamentoRepository):
 
     def actualizar(self, departamento: Departamento) -> Departamento:
-        """Actualiza un departamento existente en la base de datos."""
         departamento_model = DepartamentoModel.objects.get(id=departamento.id)
         departamento_model.nombre = departamento.nombre
         departamento_model.save()
@@ -34,11 +33,9 @@ class DepartamentoRepositoryImpl(DepartamentoRepository):
             return None
 
     def eliminar(self, nombre: str) -> None:
-        """Elimina un departamento por nombre."""
         DepartamentoModel.objects.filter(nombre=nombre).delete()
 
     def eliminar_por_id(self, id: int) -> None:
-        """Elimina un departamento por ID."""
         DepartamentoModel.objects.filter(id=id).delete()
 
     def obtener_todos(self) -> List[Departamento]:
