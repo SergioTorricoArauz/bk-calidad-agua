@@ -1,0 +1,1 @@
+from .departamento_exception import DepartamentoError
