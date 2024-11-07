@@ -35,3 +35,7 @@ class ProvinciaRepository(ABC):
     def obtener_todas(self) -> List[Provincia]:
         """Devuelve una lista de todas las provincias."""
         pass
+
+    def actualizar(self, provincia):
+        """Actualiza una provincia existente en la base de datos."""
+        pass
