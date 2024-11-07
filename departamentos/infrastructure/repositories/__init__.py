@@ -1,0 +1,1 @@
+from .departamento_repository import DepartamentoRepositoryImpl

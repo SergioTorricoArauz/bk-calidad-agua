@@ -1,6 +1,6 @@
 # mi_app/application/services/departamento_service_impl.py
 
-from typing import List
+from typing import List, Optional
 
 from departamentos.domain.entities import Departamento
 from departamentos.domain.exception import DepartamentoError
@@ -15,27 +15,23 @@ class DepartamentoServiceImpl(DepartamentoService):
         self.departamento_repository = departamento_repository
 
     def crear_departamento(self, nombre: str) -> Departamento:
-        """Crea un nuevo departamento y lo guarda en el repositorio."""
         if not nombre:
             raise DepartamentoError("El nombre del departamento no puede estar vacío.")
-
-        # Crear la instancia de departamento
         departamento = Departamento(nombre=nombre)
-
-        # Guardar usando el repositorio
-        self.departamento_repository.guardar(departamento)
-
-        return departamento
+        return self.departamento_repository.guardar(departamento)
 
     def listar_departamentos(self) -> List[Departamento]:
-        """Devuelve una lista de todos los departamentos."""
-        # Obtener todos los departamentos usando el repositorio
         return self.departamento_repository.obtener_todos()
 
-    def eliminar_departamento(self, nombre: str) -> None:
-        """Elimina un departamento por su nombre."""
-        if not nombre:
-            raise DepartamentoError("El nombre del departamento no puede estar vacío.")
+    def obtener_departamento_por_id(self, id: int) -> Optional[Departamento]:
+        departamento = self.departamento_repository.obtener_por_id(id)
+        if departamento is None:
+            raise DepartamentoError(f"Departamento con id {id} no encontrado.")
+        return departamento
 
-        # Eliminar el departamento usando el repositorio
+    def eliminar_departamento(self, nombre: str) -> None:
+        """Elimina un departamento por su nombre"""
+        departamento = self.departamento_repository.obtener_por_nombre(nombre)
+        if departamento is None:
+            raise DepartamentoError(f"Departamento con nombre '{nombre}' no encontrado.")
         self.departamento_repository.eliminar(nombre)
