@@ -19,3 +19,6 @@ class DepartamentoRepository(ABC):
     @abstractmethod
     def eliminar(self, nombre: str) -> None:
         pass
+
+    def obtener_todos(self):
+        pass
