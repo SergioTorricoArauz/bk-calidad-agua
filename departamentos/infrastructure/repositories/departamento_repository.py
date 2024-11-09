@@ -4,9 +4,20 @@ from typing import List, Optional
 from departamentos.domain.entities import Departamento
 from departamentos.domain.port.output.departamento_repository import DepartamentoRepository
 from departamentos.infrastructure.models import DepartamentoModel
+from provincias.domain.entities import Provincia
 
 
 class DepartamentoRepositoryImpl(DepartamentoRepository):
+
+    def obtener_provincias(self, departamento_id: int) -> List[Provincia]:
+        """Obtiene todas las provincias pertenecientes a un departamento específico."""
+        try:
+            departamento = DepartamentoModel.objects.get(id=departamento_id)
+            provincias_model = departamento.provincias.all()  # Usamos el `related_name`
+            return [Provincia(nombre=prov.nombre, departamento_id=prov.departamento.id, id=prov.id) for prov in
+                    provincias_model]
+        except DepartamentoModel.DoesNotExist:
+            return []
 
     def actualizar(self, departamento: Departamento) -> Departamento:
         departamento_model = DepartamentoModel.objects.get(id=departamento.id)

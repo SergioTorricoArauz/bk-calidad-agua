@@ -30,5 +30,10 @@ class ProvinciaRepository(ABC):
     def obtener_todas(self) -> List[Provincia]:
         pass
 
+    @abstractmethod
     def actualizar(self, provincia):
         pass
+
+# @abstractmethod
+# def obtener_provincias_por_departamento(self, departamento_id):
+#   pass

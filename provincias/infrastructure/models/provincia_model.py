@@ -9,4 +9,4 @@ class ProvinciaModel(models.Model):
     departamento = models.ForeignKey(DepartamentoModel, on_delete=models.CASCADE, related_name="provincias")
 
     def __str__(self):
-        return self.nombre + " - " + self.departamento.nombre
+        return self.nombre

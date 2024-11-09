@@ -50,3 +50,9 @@ class ProvinciaViewSet(viewsets.ViewSet):
             departamento_id=serializer.validated_data['departamento_id']
         )
         return Response(ProvinciaSerializer(provincia).data, status=status.HTTP_200_OK)
+
+# @action(detail=False, methods=['get'], url_path='por-departamento/(?P<departamento_id>[^/.]+)')
+# def listar_por_departamento(self, request, departamento_id=None):
+#   provincias = provincia_service.listar_provincias_por_departamento(int(departamento_id))
+#  serializer = ProvinciaSerializer(provincias, many=True)
+# return Response(serializer.data, status=status.HTTP_200_OK)

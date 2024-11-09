@@ -5,6 +5,7 @@ from departamentos.domain.entities import Departamento
 from departamentos.domain.exception import DepartamentoError
 from departamentos.domain.port.input import DepartamentoService
 from departamentos.domain.port.output.departamento_repository import DepartamentoRepository
+from provincias.domain.entities import Provincia
 
 
 class DepartamentoServiceImpl(DepartamentoService):
@@ -45,3 +46,7 @@ class DepartamentoServiceImpl(DepartamentoService):
         if departamento is None:
             raise DepartamentoError(f"Departamento con id '{id}' no encontrado.")
         self.departamento_repository.eliminar_por_id(id)
+
+    def listar_provincias(self, departamento_id: int) -> List[Provincia]:
+        """Obtiene todas las provincias de un departamento específico."""
+        return self.departamento_repository.obtener_provincias(departamento_id)

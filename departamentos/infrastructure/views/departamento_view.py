@@ -1,12 +1,14 @@
 # departamentos/infrastructure/views/departamento_view.py
 
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from departamentos.application.services import DepartamentoServiceImpl
 from departamentos.domain.exception import DepartamentoError
 from departamentos.infrastructure.repositories import DepartamentoRepositoryImpl
 from departamentos.infrastructure.serializers import DepartamentoSerializer
+from provincias.infrastructure.serializers import ProvinciaSerializer
 
 # Configuramos el repositorio y el servicio
 departamento_repository = DepartamentoRepositoryImpl()
@@ -54,3 +56,10 @@ class DepartamentoViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except DepartamentoError as e:
             return Response({"detail": str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True, methods=['get'], url_path='provincias')
+    def listar_provincias(self, request, pk=None):
+        """Endpoint para listar provincias de un departamento específico."""
+        provincias = departamento_service.listar_provincias(int(pk))
+        serializer = ProvinciaSerializer(provincias, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

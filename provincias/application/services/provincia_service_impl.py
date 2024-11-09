@@ -2,8 +2,10 @@
 
 from typing import List, Optional
 from provincias.domain.entities import Provincia
+from provincias.domain.exception import ProvinciaException
 from provincias.domain.ports.input.provincia_service import ProvinciaService
 from provincias.domain.ports.output.provincia_repository import ProvinciaRepository
+
 
 class ProvinciaServiceImpl(ProvinciaService):
     def __init__(self, provincia_repository: ProvinciaRepository):
@@ -19,7 +21,7 @@ class ProvinciaServiceImpl(ProvinciaService):
     def obtener_provincia_por_id(self, id: int) -> Optional[Provincia]:
         provincia = self.provincia_repository.obtener_por_id(id)
         if provincia is None:
-            raise ValueError(f"Provincia con id {id} no encontrada.")
+            raise ProvinciaException(f"Provincia con id {id} no encontrada.")
         return provincia
 
     def eliminar_provincia(self, id: int) -> None:
@@ -30,3 +32,6 @@ class ProvinciaServiceImpl(ProvinciaService):
         provincia.nombre = nombre
         provincia.departamento_id = departamento_id
         return self.provincia_repository.actualizar(provincia)
+
+    # def listar_provincias_por_departamento(self, departamento_id: int) -> List[Provincia]:
+    #    return self.provincia_repository.obtener_provincias_por_departamento(departamento_id)
