@@ -1,0 +1,1 @@
+from .comunidad_repository_impl import ComunidadRepositoryImpl

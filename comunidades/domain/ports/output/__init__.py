@@ -1,0 +1,1 @@
+from .comunidad_repository import ComunidadRepository

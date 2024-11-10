@@ -1,0 +1,2 @@
+class ComunidadException(Exception):
+    pass
