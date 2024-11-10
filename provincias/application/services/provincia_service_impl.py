@@ -1,6 +1,8 @@
 # provincias/application/services/provincia_service_impl.py
 
 from typing import List, Optional
+
+from comunidades.domain.entities import Comunidad
 from provincias.domain.entities import Provincia
 from provincias.domain.exception import ProvinciaException
 from provincias.domain.ports.input.provincia_service import ProvinciaService
@@ -33,5 +35,5 @@ class ProvinciaServiceImpl(ProvinciaService):
         provincia.departamento_id = departamento_id
         return self.provincia_repository.actualizar(provincia)
 
-    # def listar_provincias_por_departamento(self, departamento_id: int) -> List[Provincia]:
-    #    return self.provincia_repository.obtener_provincias_por_departamento(departamento_id)
+    def listar_comunidades(self, provincia_id: int) -> list[Comunidad]:
+        return self.provincia_repository.obtener_comunidades(provincia_id)

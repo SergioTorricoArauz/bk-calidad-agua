@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'departamentos',
     'provincias',
     'comunidades',
+    'cuerpos_de_agua',
 ]
 
 MIDDLEWARE = [

@@ -2,6 +2,8 @@
 
 from abc import ABC, abstractmethod
 from typing import List, Optional
+
+from comunidades.domain.entities import Comunidad
 from provincias.domain.entities import Provincia
 
 
@@ -34,6 +36,6 @@ class ProvinciaRepository(ABC):
     def actualizar(self, provincia):
         pass
 
-# @abstractmethod
-# def obtener_provincias_por_departamento(self, departamento_id):
-#   pass
+    @abstractmethod
+    def obtener_comunidades(self, comunidad_id: int) -> List[Comunidad]:
+        pass

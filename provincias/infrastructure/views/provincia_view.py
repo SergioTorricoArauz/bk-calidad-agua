@@ -1,7 +1,9 @@
 # provincias/infrastructure/views/provincia_view.py
-
+from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+
+from comunidades.infrastructure.serializers import ComunidadSerializer
 from provincias.infrastructure.serializers.provincia_serializer import ProvinciaSerializer
 from provincias.application.services.provincia_service_impl import ProvinciaServiceImpl
 from provincias.infrastructure.repositories.provincia_repository_impl import ProvinciaRepositoryImpl
@@ -51,8 +53,8 @@ class ProvinciaViewSet(viewsets.ViewSet):
         )
         return Response(ProvinciaSerializer(provincia).data, status=status.HTTP_200_OK)
 
-# @action(detail=False, methods=['get'], url_path='por-departamento/(?P<departamento_id>[^/.]+)')
-# def listar_por_departamento(self, request, departamento_id=None):
-#   provincias = provincia_service.listar_provincias_por_departamento(int(departamento_id))
-#  serializer = ProvinciaSerializer(provincias, many=True)
-# return Response(serializer.data, status=status.HTTP_200_OK)
+    @action(detail=True, methods=['get'], url_path='comunidades')
+    def listar_comunidades(self, request, pk=None):
+        comunidades = provincia_service.listar_comunidades(int(pk))
+        serializer = ComunidadSerializer(comunidades, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

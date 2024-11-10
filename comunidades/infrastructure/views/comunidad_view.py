@@ -1,11 +1,14 @@
 # comunidades/infrastructure/views/comunidad_view.py
 
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from comunidades.application.services.comunidad_service_impl import ComunidadServiceImpl
 from comunidades.domain.exception import ComunidadException
 from comunidades.infrastructure.repositories.comunidad_repository_impl import ComunidadRepositoryImpl
 from comunidades.infrastructure.serializers.comunidad_serializer import ComunidadSerializer
+from cuerpos_de_agua.domain.ports.input import cuerpo_de_agua_service
+from cuerpos_de_agua.infrastructure.serializers import CuerpoDeAguaSerializer
 
 comunidad_repository = ComunidadRepositoryImpl()
 comunidad_service = ComunidadServiceImpl(comunidad_repository)
@@ -58,3 +61,17 @@ class ComunidadViewSet(viewsets.ViewSet):
             return Response(ComunidadSerializer(comunidad).data, status=status.HTTP_200_OK)
         except ComunidadException as e:
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True, methods=['get'], url_path='cuerpos_de_agua')
+    def listar_cuerpos_de_agua(self, request, pk=None):
+        """Listar cuerpos de agua para una comunidad específica."""
+        if pk is None:
+            return Response({"error": "ID de la comunidad no proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Llama al servicio de cuerpos de agua para obtener la lista por comunidad
+            cuerpos_de_agua = cuerpo_de_agua_service.listar_cuerpos_de_agua_por_comunidad(int(pk))
+            serializer = CuerpoDeAguaSerializer(cuerpos_de_agua, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

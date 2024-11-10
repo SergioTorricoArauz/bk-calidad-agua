@@ -1,6 +1,8 @@
 # provincias/infrastructure/repositories/provincia_repository_impl.py
 
 from typing import List, Optional
+
+from comunidades.domain.entities import Comunidad
 from provincias.domain.entities import Provincia
 from provincias.domain.ports.output.provincia_repository import ProvinciaRepository
 from provincias.infrastructure.models.provincia_model import ProvinciaModel
@@ -10,7 +12,7 @@ class ProvinciaRepositoryImpl(ProvinciaRepository):
     def guardar(self, provincia: Provincia) -> Provincia:
         provincia_model = ProvinciaModel.objects.create(
             nombre=provincia.nombre,
-            departamento_id=provincia.departamento_id  # Guardar usando departamento_id
+            departamento_id=provincia.departamento_id
         )
         return Provincia(nombre=provincia_model.nombre, departamento_id=provincia_model.departamento.id,
                          id=provincia_model.id)
@@ -52,7 +54,10 @@ class ProvinciaRepositoryImpl(ProvinciaRepository):
         return Provincia(nombre=provincia_model.nombre, departamento_id=provincia_model.departamento.id,
                          id=provincia_model.id)
 
-# def obtener_provincias_por_departamento(self, departamento_id: int) -> List[Provincia]:
-#    provincias_model = ProvinciaModel.objects.filter(departamento_id=departamento_id)
-#   return [Provincia(nombre=prov.nombre, departamento_id=prov.departamento.id, id=prov.id) for prov in
-#          provincias_model]
+    def obtener_comunidades(self, provincia_id: int) -> List[Comunidad]:
+        try:
+            provincia_model = ProvinciaModel.objects.get(id=provincia_id)
+            comunidades_model = provincia_model.comunidades.all()
+            return [Comunidad(nombre=com.nombre, provincia_id=com.provincia.id, id=com.id) for com in comunidades_model]
+        except ProvinciaModel.DoesNotExist:
+            return []

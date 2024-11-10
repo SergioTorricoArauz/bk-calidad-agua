@@ -10,7 +10,6 @@ from provincias.domain.entities import Provincia
 class DepartamentoRepositoryImpl(DepartamentoRepository):
 
     def obtener_provincias(self, departamento_id: int) -> List[Provincia]:
-        """Obtiene todas las provincias pertenecientes a un departamento específico."""
         try:
             departamento = DepartamentoModel.objects.get(id=departamento_id)
             provincias_model = departamento.provincias.all()  # Usamos el `related_name`

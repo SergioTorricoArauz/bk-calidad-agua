@@ -48,5 +48,4 @@ class DepartamentoServiceImpl(DepartamentoService):
         self.departamento_repository.eliminar_por_id(id)
 
     def listar_provincias(self, departamento_id: int) -> List[Provincia]:
-        """Obtiene todas las provincias de un departamento específico."""
         return self.departamento_repository.obtener_provincias(departamento_id)

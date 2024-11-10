@@ -59,7 +59,6 @@ class DepartamentoViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=['get'], url_path='provincias')
     def listar_provincias(self, request, pk=None):
-        """Endpoint para listar provincias de un departamento específico."""
         provincias = departamento_service.listar_provincias(int(pk))
         serializer = ProvinciaSerializer(provincias, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
