@@ -5,6 +5,7 @@ from comunidades.domain.entities.comunidad import Comunidad
 from comunidades.domain.exception.comunidad_exception import ComunidadException
 from comunidades.domain.ports.input.comunidad_service import ComunidadService
 from comunidades.domain.ports.output.comunidad_repository import ComunidadRepository
+from cuerpos_de_agua.domain.entities import CuerpoDeAgua
 
 
 class ComunidadServiceImpl(ComunidadService):
@@ -40,3 +41,6 @@ class ComunidadServiceImpl(ComunidadService):
         comunidad.nombre = nombre
         comunidad.provincia_id = provincia_id
         return self.comunidad_repository.actualizar(comunidad)
+
+    def obtener_cuerpos_de_agua(self, comunidad_id: int) -> List[CuerpoDeAgua]:
+        return self.comunidad_repository.obtener_cuerpos_de_agua(comunidad_id)

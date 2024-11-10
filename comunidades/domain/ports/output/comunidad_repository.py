@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from typing import List, Optional
 from comunidades.domain.entities.comunidad import Comunidad
+from cuerpos_de_agua.domain.entities import CuerpoDeAgua
 
 
 class ComunidadRepository(ABC):
@@ -25,4 +26,8 @@ class ComunidadRepository(ABC):
 
     @abstractmethod
     def actualizar(self, comunidad):
+        pass
+
+    @abstractmethod
+    def obtener_cuerpos_de_agua(self, comunidad_id: int) -> List[CuerpoDeAgua]:
         pass

@@ -63,15 +63,7 @@ class ComunidadViewSet(viewsets.ViewSet):
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
     @action(detail=True, methods=['get'], url_path='cuerpos_de_agua')
-    def listar_cuerpos_de_agua(self, request, pk=None):
-        """Listar cuerpos de agua para una comunidad específica."""
-        if pk is None:
-            return Response({"error": "ID de la comunidad no proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            # Llama al servicio de cuerpos de agua para obtener la lista por comunidad
-            cuerpos_de_agua = cuerpo_de_agua_service.listar_cuerpos_de_agua_por_comunidad(int(pk))
-            serializer = CuerpoDeAguaSerializer(cuerpos_de_agua, many=True)
-            return Response(serializer.data)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    def cuerpos_de_agua(self, request, pk=None):
+        cuerpos_de_agua = comunidad_service.obtener_cuerpos_de_agua(int(pk))
+        serializer = CuerpoDeAguaSerializer(cuerpos_de_agua, many=True)
+        return Response(serializer.data)

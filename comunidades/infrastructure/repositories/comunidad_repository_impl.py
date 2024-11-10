@@ -4,6 +4,7 @@ from typing import List, Optional
 from comunidades.domain.entities.comunidad import Comunidad
 from comunidades.domain.ports.output.comunidad_repository import ComunidadRepository
 from comunidades.infrastructure.models.comunidad_model import ComunidadModel
+from cuerpos_de_agua.domain.entities import CuerpoDeAgua
 
 
 class ComunidadRepositoryImpl(ComunidadRepository):
@@ -37,3 +38,12 @@ class ComunidadRepositoryImpl(ComunidadRepository):
 
     def eliminar(self, id: int) -> None:
         ComunidadModel.objects.filter(id=id).delete()
+
+    def obtener_cuerpos_de_agua(self, comunidad_id: int) -> List[CuerpoDeAgua]:
+        try:
+            comunidad_model = ComunidadModel.objects.get(id=comunidad_id)
+            cuerpos_de_agua_model = comunidad_model.cuerpos_de_agua.all()
+            return [CuerpoDeAgua(id=ca.id, nombre=ca.nombre, tipo=ca.tipo, latitud=ca.latitud, longitud=ca.longitud,
+                                 comunidad_id=ca.comunidad.id) for ca in cuerpos_de_agua_model]
+        except ComunidadModel.DoesNotExist:
+            return []
