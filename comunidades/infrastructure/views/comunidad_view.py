@@ -3,6 +3,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from comunidades.application.services.comunidad_service_impl import ComunidadServiceImpl
+from comunidades.domain.exception import ComunidadException
 from comunidades.infrastructure.repositories.comunidad_repository_impl import ComunidadRepositoryImpl
 from comunidades.infrastructure.serializers.comunidad_serializer import ComunidadSerializer
 
