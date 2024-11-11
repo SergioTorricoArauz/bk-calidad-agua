@@ -7,7 +7,6 @@ from comunidades.application.services.comunidad_service_impl import ComunidadSer
 from comunidades.domain.exception import ComunidadException
 from comunidades.infrastructure.repositories.comunidad_repository_impl import ComunidadRepositoryImpl
 from comunidades.infrastructure.serializers.comunidad_serializer import ComunidadSerializer
-from cuerpos_de_agua.domain.ports.input import cuerpo_de_agua_service
 from cuerpos_de_agua.infrastructure.serializers import CuerpoDeAguaSerializer
 
 comunidad_repository = ComunidadRepositoryImpl()
