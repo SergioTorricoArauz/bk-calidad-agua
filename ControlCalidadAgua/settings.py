@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'provincias',
     'comunidades',
     'cuerpos_de_agua',
+    'usuarios.apps.UsuariosConfig',
 ]
 
 MIDDLEWARE = [

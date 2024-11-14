@@ -46,6 +46,7 @@ class ProvinciaViewSet(viewsets.ViewSet):
     def update(request, pk=None):
         serializer = ProvinciaSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         provincia = provincia_service.actualizar_provincia(
             id=int(pk),
             nombre=serializer.validated_data['nombre'],
