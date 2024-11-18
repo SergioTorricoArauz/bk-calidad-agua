@@ -1,0 +1,1 @@
+from .salida_de_campo_repository_impl import SalidaDeCampoRepositoryImpl

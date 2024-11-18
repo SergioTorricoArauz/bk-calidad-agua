@@ -1,4 +1,4 @@
-# departamentos/domain/exception/departamento_exception.py
+# departamentos/domain/exceptions/departamento_exception.py
 
 class DepartamentoError(Exception):
     pass

@@ -1,0 +1,2 @@
+class SalidaDeCampoException(Exception):
+    pass

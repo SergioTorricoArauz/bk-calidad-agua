@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'usuarios.apps.UsuariosConfig',
     'departamentos',
     'provincias',
     'comunidades',
     'cuerpos_de_agua',
-    'usuarios.apps.UsuariosConfig',
+    'salidas_de_campo',
 ]
 
 MIDDLEWARE = [

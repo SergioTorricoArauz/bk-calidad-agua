@@ -24,4 +24,5 @@ urlpatterns = [
     path('app/', include('provincias.urls')),
     path('app/', include('comunidades.urls')),
     path('app/', include('cuerpos_de_agua.urls')),
+    path('app/', include('salidas_de_campo.urls')),
 ]
