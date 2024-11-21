@@ -26,4 +26,5 @@ urlpatterns = [
     path('app/', include('cuerpos_de_agua.urls')),
     path('app/', include('salidas_de_campo.urls')),
     path('app/', include('analisis_muestreo.urls')),
+    path('app/', include('galeria.urls')),
 ]

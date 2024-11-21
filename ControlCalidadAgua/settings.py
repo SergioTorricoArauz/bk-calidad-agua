@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cuerpos_de_agua',
     'salidas_de_campo',
     'analisis_muestreo',
+    'galeria',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=4),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -1,0 +1,1 @@
+from .imagen_repository_impl import ImagenRepositoryImpl
