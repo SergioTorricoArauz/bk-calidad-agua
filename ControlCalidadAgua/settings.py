@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'comunidades',
     'cuerpos_de_agua',
     'salidas_de_campo',
+    'analisis_muestreo',
 ]
 
 MIDDLEWARE = [

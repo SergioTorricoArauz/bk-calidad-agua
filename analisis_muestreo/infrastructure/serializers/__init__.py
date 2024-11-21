@@ -1,0 +1,2 @@
+from .analisis_turbidez_serializer import AnalisisTurbidezSerializer
+from .analisis_caudal_serializer import AnalisisCaudalSerializer

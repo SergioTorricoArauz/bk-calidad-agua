@@ -1,0 +1,2 @@
+class AnalisisMuestreoException(Exception):
+    pass
