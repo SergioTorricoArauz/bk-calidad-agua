@@ -1,18 +1,22 @@
 # galeria/infrastructure/views/imagen_view.py
+
+from django.core.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from galeria.application.services.imagen_service_impl import ImagenServiceImpl
-from galeria.infrastructure.helpers import ContentTypeHelper
 from galeria.infrastructure.models import ImagenModel
 from galeria.infrastructure.repositories.imagen_repository_impl import ImagenRepositoryImpl
 from galeria.infrastructure.serializers.imagen_serializer import ImagenSerializer
+import os  # Para trabajar con extensiones de archivo
 
 imagen_repository = ImagenRepositoryImpl()
 imagen_service = ImagenServiceImpl(imagen_repository)
 
 
 class ImagenViewSet(viewsets.ViewSet):
+    ALLOWED_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif'}  # Extensiones permitidas
+
     @staticmethod
     def list(request):
         relacionado_tipo = request.query_params.get('relacionado_tipo')
@@ -29,7 +33,13 @@ class ImagenViewSet(viewsets.ViewSet):
     def create(self, request):
         serializer = ImagenSerializer(data=request.data)
         if serializer.is_valid():
-            relacionado_tipo_str = serializer.validated_data['relacionado_tipo'].lower()  # Convertir a minúsculas
+            file = request.data.get('url')  # Aquí puede ser un archivo subido o una URL
+            try:
+                self._validate_image_extension(file)
+            except ValidationError as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+            relacionado_tipo_str = serializer.validated_data['relacionado_tipo'].lower()
             relacionado_id = serializer.validated_data['relacionado_id']
 
             # Obtener app_label y model_name del mapping
@@ -102,3 +112,21 @@ class ImagenViewSet(viewsets.ViewSet):
         if relacionado_tipo_str not in mapping:
             return None, None
         return mapping[relacionado_tipo_str]
+
+    def _validate_image_extension(self, file):
+        """
+        Valida que el archivo subido o la URL tenga una extensión de imagen válida.
+        :param file: Puede ser una URL (str) o un archivo subido (InMemoryUploadedFile).
+        :raises ValidationError: Si la extensión no es válida.
+        """
+        if hasattr(file, 'name'):  # Es un archivo subido
+            _, ext = os.path.splitext(file.name)
+        elif isinstance(file, str):  # Es una URL
+            _, ext = os.path.splitext(file)
+        else:
+            raise ValidationError("Formato no válido. Debe ser una URL o un archivo subido.")
+
+        if ext.lower() not in self.ALLOWED_IMAGE_EXTENSIONS:
+            raise ValidationError(
+                f"La extensión '{ext}' no es válida. Sólo se permiten: {', '.join(self.ALLOWED_IMAGE_EXTENSIONS)}."
+            )

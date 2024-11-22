@@ -5,7 +5,7 @@ from galeria.infrastructure.models.imagen_model import ImagenModel
 
 
 class ImagenSerializer(serializers.ModelSerializer):
-    relacionado_tipo = serializers.CharField()  # Aceptar string
+    relacionado_tipo = serializers.CharField()
     relacionado_id = serializers.IntegerField()
 
     class Meta:

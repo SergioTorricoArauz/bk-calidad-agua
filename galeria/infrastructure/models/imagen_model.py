@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class ImagenModel(models.Model):
-    url = models.URLField()  # URL de la imagen
+    url = models.ImageField(upload_to='galeria/')  # URL de la imagen
     relacionado_tipo = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # Modelo relacionado
     relacionado_id = models.PositiveIntegerField()  # ID del objeto relacionado
     relacionado_objeto = GenericForeignKey('relacionado_tipo', 'relacionado_id')  # Referencia genérica
