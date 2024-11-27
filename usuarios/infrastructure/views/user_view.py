@@ -2,13 +2,17 @@
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+
+from usuarios.application.permissions import IsAdmin
 from usuarios.application.services.user_service_impl import UserServiceImpl
 from usuarios.infrastructure.serializers.user_serializer import UsuarioSerializer, UsuarioCrearSerializer
 
-# Inicializar el servicio
 user_service = UserServiceImpl()
 
+
 class UserViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdmin]
+
     @staticmethod
     def create(request):
         serializer = UsuarioCrearSerializer(data=request.data)

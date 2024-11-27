@@ -8,7 +8,6 @@ class UserServiceImpl(UserService):
     def crear_usuario(self, username: str, email: str, password: str, grupo_nombre: str) -> User:
         usuario = User.objects.create_user(username=username, email=email, password=password)
 
-        # Asigna el grupo según el nombre proporcionado
         grupo = Group.objects.get(name=grupo_nombre)
         usuario.groups.add(grupo)
 
