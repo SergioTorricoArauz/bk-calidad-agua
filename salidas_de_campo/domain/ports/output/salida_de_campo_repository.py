@@ -15,7 +15,7 @@ class SalidaDeCampoRepository(ABC):
         pass
 
     @abstractmethod
-    def obtener_todas(self) -> List[SalidaDeCampo]:
+    def obtener_todas(self, tecnico_id: Optional[int] = None) -> List[SalidaDeCampo]:
         pass
 
     @abstractmethod

@@ -4,12 +4,15 @@ from rest_framework.response import Response
 from cuerpos_de_agua.application.services.cuerpo_de_agua_service_impl import CuerpoDeAguaServiceImpl
 from cuerpos_de_agua.infrastructure.repositories.cuerpo_de_agua_repository_impl import CuerpoDeAguaRepositoryImpl
 from cuerpos_de_agua.infrastructure.serializers.cuerpo_de_agua_serializer import CuerpoDeAguaSerializer
+from usuarios.application.permissions import IsAdmin
 
 cuerpo_de_agua_repository = CuerpoDeAguaRepositoryImpl()
 cuerpo_de_agua_service = CuerpoDeAguaServiceImpl(cuerpo_de_agua_repository)
 
 
 class CuerpoDeAguaViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdmin]
+
     @staticmethod
     def create(request):
         serializer = CuerpoDeAguaSerializer(data=request.data)

@@ -16,7 +16,7 @@ class SalidaDeCampoService(ABC):
         pass
 
     @abstractmethod
-    def listar_salidas(self) -> List[SalidaDeCampo]:
+    def listar_salidas(self, tecnico_id: Optional[int] = None) -> List[SalidaDeCampo]:
         pass
 
     @abstractmethod

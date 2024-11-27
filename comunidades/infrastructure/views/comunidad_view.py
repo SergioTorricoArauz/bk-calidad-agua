@@ -8,12 +8,15 @@ from comunidades.domain.exception import ComunidadException
 from comunidades.infrastructure.repositories.comunidad_repository_impl import ComunidadRepositoryImpl
 from comunidades.infrastructure.serializers.comunidad_serializer import ComunidadSerializer
 from cuerpos_de_agua.infrastructure.serializers import CuerpoDeAguaSerializer
+from usuarios.application.permissions import IsAdmin
 
 comunidad_repository = ComunidadRepositoryImpl()
 comunidad_service = ComunidadServiceImpl(comunidad_repository)
 
 
 class ComunidadViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdmin]
+
     @staticmethod
     def list(request):
         comunidades = comunidad_service.listar_comunidades()

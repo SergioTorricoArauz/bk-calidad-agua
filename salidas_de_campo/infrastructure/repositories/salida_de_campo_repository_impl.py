@@ -28,8 +28,12 @@ class SalidaDeCampoRepositoryImpl(SalidaDeCampoRepository):
         except SalidaDeCampoModel.DoesNotExist:
             return None
 
-    def obtener_todas(self) -> List[SalidaDeCampo]:
-        salida_models = SalidaDeCampoModel.objects.all()
+    def obtener_todas(self, tecnico_id: Optional[int] = None) -> List[SalidaDeCampo]:
+        if tecnico_id:
+            salida_models = SalidaDeCampoModel.objects.filter(tecnicos_asignados__id=tecnico_id)
+        else:
+            salida_models = SalidaDeCampoModel.objects.all()
+
         return [self._convertir_a_entidad(salida) for salida in salida_models]
 
     def actualizar(self, salida: SalidaDeCampo) -> SalidaDeCampo:

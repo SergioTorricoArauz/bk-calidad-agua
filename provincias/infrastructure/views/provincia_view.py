@@ -7,12 +7,14 @@ from comunidades.infrastructure.serializers import ComunidadSerializer
 from provincias.infrastructure.serializers.provincia_serializer import ProvinciaSerializer
 from provincias.application.services.provincia_service_impl import ProvinciaServiceImpl
 from provincias.infrastructure.repositories.provincia_repository_impl import ProvinciaRepositoryImpl
+from usuarios.application.permissions import IsAdmin
 
 provincia_repository = ProvinciaRepositoryImpl()
 provincia_service = ProvinciaServiceImpl(provincia_repository)
 
 
 class ProvinciaViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdmin]
 
     @staticmethod
     def list(request):

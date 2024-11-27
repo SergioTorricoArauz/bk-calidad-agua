@@ -2,6 +2,7 @@
 
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from departamentos.application.services import DepartamentoServiceImpl
@@ -9,6 +10,7 @@ from departamentos.domain.exception import DepartamentoError
 from departamentos.infrastructure.repositories import DepartamentoRepositoryImpl
 from departamentos.infrastructure.serializers import DepartamentoSerializer
 from provincias.infrastructure.serializers import ProvinciaSerializer
+from usuarios.application.permissions import IsAdmin
 
 # Configuramos el repositorio y el servicio
 departamento_repository = DepartamentoRepositoryImpl()
@@ -16,6 +18,7 @@ departamento_service = DepartamentoServiceImpl(departamento_repository)
 
 
 class DepartamentoViewSet(viewsets.ViewSet):
+    permission_classes = [IsAdmin]
 
     @staticmethod
     def list(request):

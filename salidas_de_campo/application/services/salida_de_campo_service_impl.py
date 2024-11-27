@@ -1,14 +1,15 @@
 # salidas_de_campo/application/services/salida_de_campo_service_impl.py
 
-from typing import List, Optional
 from datetime import date
+from typing import List, Optional
+
+from django.contrib.auth.models import User
 
 from cuerpos_de_agua.infrastructure.models import CuerpoDeAguaModel
 from salidas_de_campo.domain.entities.salida_de_campo import SalidaDeCampo
 from salidas_de_campo.domain.exceptions import SalidaDeCampoException
 from salidas_de_campo.domain.ports.input.salida_de_campo_service import SalidaDeCampoService
 from salidas_de_campo.domain.ports.output.salida_de_campo_repository import SalidaDeCampoRepository
-from django.contrib.auth.models import User
 
 
 class SalidaDeCampoServiceImpl(SalidaDeCampoService):
@@ -38,7 +39,11 @@ class SalidaDeCampoServiceImpl(SalidaDeCampoService):
     def obtener_salida_por_id(self, id: int) -> Optional[SalidaDeCampo]:
         return self.salida_de_campo_repository.obtener_por_id(id)
 
-    def listar_salidas(self) -> List[SalidaDeCampo]:
+    def listar_salidas(self, tecnico_id: Optional[int] = None) -> List[SalidaDeCampo]:
+        # Filtrar salidas por técnico si tecnico_id está presente
+        if tecnico_id:
+            salidas = self.salida_de_campo_repository.obtener_todas()
+            return [salida for salida in salidas if tecnico_id in salida.tecnicos_asignados]
         return self.salida_de_campo_repository.obtener_todas()
 
     def editar_salida(self, id: int, **datos) -> SalidaDeCampo:
@@ -61,3 +66,18 @@ class SalidaDeCampoServiceImpl(SalidaDeCampoService):
             raise SalidaDeCampoException(f"Salida de campo con id {id} no encontrada.")
 
         self.salida_de_campo_repository.eliminar(id)
+
+    def filtrar_salidas(self, tecnico_id: Optional[int] = None, fecha_inicio: Optional[date] = None,
+                        fecha_fin: Optional[date] = None) -> List[SalidaDeCampo]:
+        salidas = self.salida_de_campo_repository.obtener_todas()
+
+        if tecnico_id:
+            salidas = [salida for salida in salidas if tecnico_id in salida.tecnicos_asignados]
+
+        if fecha_inicio:
+            salidas = [salida for salida in salidas if salida.fecha_inicio >= fecha_inicio]
+
+        if fecha_fin:
+            salidas = [salida for salida in salidas if salida.fecha_fin <= fecha_fin]
+
+        return salidas
