@@ -89,9 +89,22 @@ class AnalisisRepositoryImpl(AnalisisRepository):
         except AnalisisModel.DoesNotExist:
             return None
 
+    def obtener_todos_por_salidas(self, salidas_ids: Optional[List[int]] = None) -> List[Analisis]:
+        """
+        Recupera todos los análisis asociados a una lista de IDs de salidas de campo.
+        Si salidas_ids es None, recupera todos los análisis.
+        :param salidas_ids: Lista de IDs de salidas de campo.
+        """
+        if salidas_ids is None:
+            analisis_models = AnalisisModel.objects.all()
+        else:
+            analisis_models = AnalisisModel.objects.filter(salida_de_campo_id__in=salidas_ids)
+
+        return [self._convertir_a_entidad(am) for am in analisis_models]
+
     def obtener_todos_por_salida(self, salida_de_campo_id: int) -> List[Analisis]:
         """
-        Recupera todos los análisis asociados a una salida de campo.
+        Recupera todos los análisis asociados a una salida de campo específica.
         """
         analisis_models = AnalisisModel.objects.filter(salida_de_campo_id=salida_de_campo_id)
         return [self._convertir_a_entidad(am) for am in analisis_models]

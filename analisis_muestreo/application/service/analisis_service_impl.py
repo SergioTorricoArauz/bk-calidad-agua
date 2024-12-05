@@ -30,6 +30,7 @@ class AnalisisServiceImpl(AnalisisService):
 
         # Guarda el análisis en el repositorio
         return self.analisis_repository.guardar(analisis)
+
     def listar_analisis_por_salida(self, salida_de_campo_id: int) -> List[Analisis]:
         """
         Lista todos los análisis asociados a una salida de campo.
@@ -106,3 +107,16 @@ class AnalisisServiceImpl(AnalisisService):
             self.analisis_repository.eliminar(id)
         except Exception as e:
             raise AnalisisMuestreoException(f"Error al eliminar el análisis con ID {id}: {e}")
+
+    def listar_todos(self) -> List[Analisis]:
+        """
+        Devuelve una lista con todos los análisis registrados.
+        """
+        return self.analisis_repository.obtener_todos_por_salida(None)  # None para obtener todos
+
+    def listar_analisis_por_salidas(self, salidas_ids: List[int]) -> List[Analisis]:
+        """
+        Devuelve una lista de análisis asociados a una lista de salidas de campo.
+        :param salidas_ids: Lista de IDs de salidas de campo.
+        """
+        return self.analisis_repository.obtener_todos_por_salidas(salidas_ids)

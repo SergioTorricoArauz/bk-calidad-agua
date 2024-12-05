@@ -36,3 +36,11 @@ class AnalisisRepository(ABC):
     def eliminar(self, id: int) -> None:
         """Elimina un análisis específico por su ID."""
         pass
+
+    @abstractmethod
+    def obtener_todos_por_salidas(self, salidas_ids: Optional[List[int]] = None) -> List[Analisis]:
+        """
+        Recupera todos los análisis asociados a una lista de IDs de salidas de campo.
+        Si salidas_ids es None, devuelve todos los análisis.
+        """
+        pass
