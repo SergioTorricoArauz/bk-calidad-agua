@@ -1,2 +1,1 @@
-from .analisis_turbidez_service import AnalisisTurbidezService
-from .analisis_caudal_service import AnalisisCaudalService
+from .analisis_service import AnalisisService

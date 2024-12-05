@@ -6,9 +6,18 @@ import re
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    grupo = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'is_active']
+        fields = ['id', 'username', 'email', 'is_active', 'grupo']
+
+    @staticmethod
+    def get_grupo(obj):
+        grupos = obj.groups.all()
+        if grupos:
+            return grupos[0].name
+        return None
 
 
 class UsuarioCrearSerializer(serializers.ModelSerializer):

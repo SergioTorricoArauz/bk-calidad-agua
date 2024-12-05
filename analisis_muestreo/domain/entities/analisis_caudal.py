@@ -1,26 +1,67 @@
-# analisis_muestreo/domain/entities/analisis_caudal.py
-from datetime import datetime
-from typing import Optional
-from analisis_muestreo.domain.exception import AnalisisMuestreoException
+# analisis/domain/entities/analisis_caudal.py
+
+from analisis_muestreo.domain.entities import Analisis
 
 
-class AnalisisCaudal:
-    def __init__(self, velocidad: float, ancho: float, profundidad_media: float,
-                 fecha: datetime, tecnico_id: int, salida_id: int, id: Optional[int] = None):
-        if velocidad <= 0 or ancho <= 0 or profundidad_media <= 0:
-            raise AnalisisMuestreoException("Los valores de velocidad, ancho y profundidad deben ser positivos.")
-        self.id = id
+class AnalisisCaudal(Analisis):
+    def __init__(self, velocidad: float, ancho: float, profundidad_media: float, salida_de_campo_id: int, **kwargs):
+        """
+        Constructor para análisis de caudal.
+        :param velocidad: Velocidad del flujo (m/s).
+        :param ancho: Ancho del cuerpo de agua (m).
+        :param profundidad_media: Profundidad media del cuerpo de agua (m).
+        :param salida_de_campo_id: ID de la salida de campo relacionada.
+        :param kwargs: Argumentos adicionales para la clase base.
+        """
+        # Crear el diccionario de datos para la clase base
+        datos = {
+            "velocidad": velocidad,
+            "ancho": ancho,
+            "profundidad_media": profundidad_media,
+            "caudal": self._calcular_caudal(velocidad, ancho, profundidad_media),
+        }
+
+        super().__init__(tipo="caudal", salida_de_campo_id=salida_de_campo_id, datos=datos, **kwargs)
+
+        # Asignar valores específicos
         self.velocidad = velocidad
         self.ancho = ancho
         self.profundidad_media = profundidad_media
-        self.fecha = fecha
-        self.tecnico_id = tecnico_id
-        self.salida_id = salida_id
+        self.caudal = datos["caudal"]
 
-    def calcular_caudal(self) -> float:
-        return self.ancho * self.profundidad_media * self.velocidad
+        # Validar los datos
+        self.validar()
 
-    def __str__(self):
-        return (f"Análisis de Caudal (Velocidad: {self.velocidad} m/s, Ancho: {self.ancho} m, "
-                f"Profundidad Media: {self.profundidad_media} m, Fecha: {self.fecha}, Técnico ID: {self.tecnico_id}, "
-                f"Salida ID: {self.salida_id}, Caudal: {self.calcular_caudal()} m³/s)")
+    @staticmethod
+    def _calcular_caudal(velocidad: float, ancho: float, profundidad_media: float) -> float:
+        """
+        Calcula el caudal en metros cúbicos por segundo (m³/s).
+        :param velocidad: Velocidad del flujo (m/s).
+        :param ancho: Ancho del cuerpo de agua (m).
+        :param profundidad_media: Profundidad media (m).
+        :return: El caudal calculado.
+        """
+        return velocidad * ancho * profundidad_media
+
+    def validar(self):
+        """
+        Valida los atributos del análisis de caudal.
+        """
+        if self.velocidad < 0:
+            raise ValueError("La velocidad debe ser positiva.")
+        if self.ancho <= 0:
+            raise ValueError("El ancho debe ser mayor que 0.")
+        if self.profundidad_media <= 0:
+            raise ValueError("La profundidad media debe ser mayor que 0.")
+
+    def detalles(self) -> dict:
+        """
+        Devuelve los detalles específicos del análisis de caudal.
+        :return: Un diccionario con los detalles del análisis.
+        """
+        return {
+            "velocidad": self.velocidad,
+            "ancho": self.ancho,
+            "profundidad_media": self.profundidad_media,
+            "caudal": self.caudal,
+        }

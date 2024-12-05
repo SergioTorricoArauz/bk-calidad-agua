@@ -1,2 +1,1 @@
-from .analisis_turbidez_repository import AnalisisTurbidezRepository
-from .analisis_caudal_repository import AnalisisCaudalRepository
+from .analisis_repository import AnalisisRepository

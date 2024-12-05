@@ -1,1 +1,2 @@
-from .analisis_turbidez_service_impl import AnalisisTurbidezServiceImpl
+from .registry import AnalisisRegistry
+from .analisis_service_impl import AnalisisServiceImpl

@@ -1,13 +1,14 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from analisis_muestreo.infrastructure.views import AnalisisTurbidezViewSet, AnalisisCaudalViewSet
+from analisis_muestreo.infrastructure.views import AnalisisView
+from analisis_muestreo.infrastructure.views.analisis_view import AnalisisDetailView
 
 router = routers.DefaultRouter()
 
-router.register('analisis-turbidez', AnalisisTurbidezViewSet, basename='analisis-turbidez')
-router.register('analisis_caudal', AnalisisCaudalViewSet, basename='analisis-caudal')
-
 urlpatterns = [
     path('', include(router.urls)),
+    path("analisis/", AnalisisView.as_view(), name="crear_analisis"),  # Crear y listar análisis
+    path("analisis/<int:id>/", AnalisisDetailView.as_view(), name="detalle_analisis"),
+    # Ver detalles y eliminar análisis
 ]

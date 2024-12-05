@@ -1,2 +1,1 @@
-from .analisis_turbidez_view import AnalisisTurbidezViewSet
-from .analisis_caudal_view import AnalisisCaudalViewSet
+from .analisis_view import AnalisisView

@@ -12,6 +12,9 @@ class UserService(ABC):
     def obtener_usuario_por_id(self, usuario_id: int) -> User:
         pass
 
+    def obtener_todos(self):
+        pass
+
     @abstractmethod
     def asignar_rol(self, usuario_id: int, grupo_nombre: str) -> None:
         pass

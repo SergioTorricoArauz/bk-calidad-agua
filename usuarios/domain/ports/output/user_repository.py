@@ -13,6 +13,9 @@ class UserRepository(ABC):
     def obtener_usuario_por_id(self, usuario_id: int) -> Optional[User]:
         pass
 
+    def obtener_todos(self):
+        pass
+
     @abstractmethod
     def actualizar_usuario(self, usuario: User) -> None:
         pass

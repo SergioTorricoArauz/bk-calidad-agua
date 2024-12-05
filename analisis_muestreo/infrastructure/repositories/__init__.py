@@ -1,2 +1,0 @@
-from .analisis_turbidez_repository_impl import AnalisisTurbidezRepositoryImpl
-from .analisis_caudal_repository_impl import AnalisisCaudalRepositoryImpl
